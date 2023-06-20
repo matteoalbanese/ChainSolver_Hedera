@@ -1,0 +1,11 @@
+ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+	justify-content: center;
+    margin: 20px;
+}
+
+li{
+    margin: 20px;
+}
