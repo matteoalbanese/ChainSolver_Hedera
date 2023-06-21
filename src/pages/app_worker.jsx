@@ -11,17 +11,20 @@ import payWorkerFcn from "../components/hedera/SmartContract/payWorker.js";
 
 function Worker() {
 	
-
 	const [walletData, setWalletData] = useState();
 	const [account, setAccount] = useState();
 	const [network, setNetwork] = useState();
 	const [contractAddress, setContractAddress] = useState();
 	
+	const [errorText, setErrorText] = useState();
 	const [connectText, setConnectText] = useState("🔌 Connect here...");
 	const [contractText, setContractText] = useState();
 	const [abortText, setAbortText]= useState();
 	const [statusText, setStatusText] = useState();
 	const [payWorkerText, setPayWorkerText] = useState();
+	const [formText, setFormText] = useState();
+	const [form1Text, setForm1Text] = useState();
+
 
 	const [connectLink, setConnectLink] = useState("");
 	const [contractLink, setContractLink] = useState();
@@ -77,14 +80,14 @@ function Worker() {
 
 	async function abortExecute(){
 		if(account === undefined){
-			setConnectText("🛑 there is no wallet connected 🛑");
+			setErrorText("🛑 there is no wallet connected 🛑");
 		}else if (contractAddress === undefined) {
 			setAbortText("🛑 Deploy a contract first! 🛑");
 		}else {
-			const [txHash] = await abortContractFcn(walletData, contractAddress);
+			const txHash = await abortContractFcn(walletData, contractAddress);
 
 			if (txHash === undefined) {
-				console.log("🛑 Error: abortExecute, transaction hash undefined 🛑");
+				setAbortText("🛑 Error: abortExecute, transaction hash undefined 🛑");
 			} else {
 				setAbortText(`abort execution complete | Transaction hash: ${txHash} ✅`);
 				setAbortLink(`https://hashscan.io/${network}/tx/${txHash}`);
@@ -94,7 +97,7 @@ function Worker() {
 	
 	async function retrieveStatus(){
 		if(account === undefined){
-			setConnectText("🛑 there is no wallet connected 🛑");
+			setErrorText("🛑 there is no wallet connected 🛑");
 		}else if (contractAddress === undefined){
 			setStatusText("🛑 there is no contract deployed 🛑");
 		}else{
@@ -117,13 +120,15 @@ function Worker() {
 	}
 
 	async function payWorkerEx(){
-		if (contractAddress === undefined) {
+		if(account === undefined){
+			setErrorText("🛑 there is no wallet connected 🛑");
+		}else if (contractAddress === undefined) {
 			setPayWorkerText("🛑 Deploy a contract first! 🛑");
 		}else {
-			const [txHash] = await payWorkerFcn(walletData, contractAddress);
+			const txHash = await payWorkerFcn(walletData, contractAddress);
 
 			if (txHash === undefined) {
-				console.log("error: the payment has not been successful");
+				setPayWorkerText("🛑 error: the payment has not been successful 🛑");
 			} else {
 				setPayWorkerText(`the payment to the worker has been successful | Transaction hash: ${txHash} ✅`);
 				setPayWorkerLink(`https://hashscan.io/${network}/tx/${txHash}`);
@@ -144,15 +149,21 @@ function Worker() {
 		// Or you can work with it as a plain object:
 		const formJson = Object.fromEntries(formData.entries());
 		const  prezzo = (formJson.price);
-		setPrice(prezzo);
-		setContractText(` price of the work: ${prezzo};  total cost (price + fees + 30% deposit): ${prezzo*1325/1000}`);
+		setPrice(prezzo*1325/1000);
+		setFormText(` price of the work: ${prezzo} Hbar;  total cost (price + fees + 30% deposit): ${prezzo*1325/1000} Hbar`);
 		console.log(` price of the work: ${prezzo};  total cost (price + fees + 30% deposit): ${prezzo*1325/1000}`);
 		
+		}
+		
+		function handleReset(){
+	
+			setFormText(` price resetted `);
+			console.log("price resetted")
 		}
 	
 	
 		return (
-		<form method="post" onSubmit={handleSubmit}>
+		<form method="post" onSubmit={handleSubmit} onReset={handleReset}>
 			<label>
 			set the price: <input name="price" defaultValue="10" />
 			</label>
@@ -175,13 +186,13 @@ function Worker() {
 		  // Or you can work with it as a plain object:
 		  const formJson = Object.fromEntries(formData.entries());
 		  setContractAddress(formJson.address);
-		  console.log(`Address : ${formJson.address}`);
+		  setForm1Text(`Address : ${formJson.address}`);
 		  
 		}
 		
 		function handleReset(){
 			setContractAddress();
-			console.log("contract address resetted ")
+			setForm1Text("contract address resetted ")
 		}
 	   
 	  
@@ -204,18 +215,21 @@ function Worker() {
 			<h2 className="header">Deploy a new contract</h2>
 			
 			<div>
+				<p className="sub-text">{formText}</p>
 				<MyForm />
 				<MyGroup fcn={contractDeploy} buttonLabel={"Deploy Contract"} text={contractText} link={contractLink} />
 			</div>
 			<div>
 				<h2 className="header">Interact with smart contract already deployed </h2>
+				<p className="sub-text">{form1Text}</p>
 				<MyForm1/>
 
 			</div>
+			<p className="sub-text">{errorText}</p>
 
-			<MyGroup fcn={retrieveStatus} buttonLabel={"status"} text={statusText} />
-			
 			<MyGroup fcn={payWorkerEx} buttonLabel={"get money"} text={payWorkerText} link={payWorkerLink}/>
+			
+			<MyGroup fcn={retrieveStatus} buttonLabel={"status"} text={statusText} />
 
 			<MyGroup fcn={abortExecute} buttonLabel={"Abort the smart contract"} text={abortText} link={abortLink} />
 			
