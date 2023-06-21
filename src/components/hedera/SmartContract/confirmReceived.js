@@ -29,6 +29,8 @@ async function confirmReceivedFcn(walletData, contractAddress){
     }catch(confirmReceivedError){
         console.log(`${confirmReceivedError.message.toString()}`);
     }
+
+    return txHash;
 }
 
 export default confirmReceivedFcn;
