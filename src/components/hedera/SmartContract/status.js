@@ -26,7 +26,7 @@ async function getStatus(walletData,contractAddress) {
         console.log(`- ${getStatusError.message.toString()}`);
     }
 
-    return [value];
+    return value;
 }
 export default getStatus;
 
