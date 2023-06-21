@@ -5,11 +5,11 @@ function Login() {
     return (
       <div>
         <div className="background">
-            <div className="shape"></div>
-            <div className="shape"></div>
+            <div className="shape2"></div>
+            <div className="shape2"></div>
         </div>
 
-        <div className="section">
+        <div className="section2">
             
             <form>
                 <h3>Connect your wallet</h3>
