@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import MyGroup from "../components/MyGroup.jsx";
 import walletConnectFcn from "../components/hedera/walletConnect.js";
+import contractDeployFcn from "../components/hedera/contractDeploy.js";
+import contractExecuteFcn from "../components/hedera/contractExecute.js";
+import "../styles/App.css";
+import logo from "../assets/logo.png";
+import chat from "../assets/chat.png";
+
+import walletConnectFcn from "../components/hedera/walletConnect.js";
 
 import getPrice from "../components/hedera/SmartContract/getPrice.js";
 import confirmPurchaseFcn from "../components/hedera/SmartContract/confirmPurchase.js";
-import "../styles/App.css";
 import getStatus from "../components/hedera/SmartContract/status.js";
 import confirmReceivedFcn from "../components/hedera/SmartContract/confirmReceived.js";
 
-
-
 function Buyer() {
-	
-	
 	const [walletData, setWalletData] = useState();
 	const [account, setAccount] = useState();
 	const [network, setNetwork] = useState();
@@ -182,23 +184,34 @@ function MyForm() {
 	  </form>
 		);
   }
-  
 
-  
-
+	
 	return (
+		<div>
+
+         <div className="background">
+            <div className="shape"></div>
+            <div className="shape"></div>
+         </div> 
+
 		<div className="App">
 
+		<div className="logo">
+				<div className="symbol">
+				   <img className="log" src={logo} alt="logo"></img>
+				</div>
+				<span>ChainSolver</span>
+			</div>
+
+			<h1 className="header">Buyer Interface</h1>
 			
-			<h1 className="header">Buyer interface</h1>
-			
-			<MyGroup fcn={connectWallet} buttonLabel={"Connect Wallet"} text={connectText} link={connectLink} />
-			
+			<MyGroup fcn={connectWallet} buttonLabel={"Connect Wallet"} text={connectTextSt} link={connectLinkSt} />
+
 			<div>
 				<MyForm />
 				<p className="sub-text">{errorText}</p>
 			</div>
-			
+
 			<MyGroup fcn={retrievePrice} buttonLabel={"click here to see the price"}  text={priceText} />
 			
 			<MyGroup fcn={confirmPurchaseEx} buttonLabel={"Accept contract "} text={confirmPurchaseText} link={confirmPurchaseLink} />
@@ -207,19 +220,13 @@ function MyForm() {
 			
 			<MyGroup fcn={retrieveStatus} buttonLabel={"click here to see the status"} text={statusText} />
 
+            <div>
+				<img className="chat" src={chat}></img>
+            </div>
 
-			<div className="logo">
-				<div className="symbol">
-					<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-						<path d="M20 0a20 20 0 1 0 20 20A20 20 0 0 0 20 0" className="circle"></path>
-						<path d="M28.13 28.65h-2.54v-5.4H14.41v5.4h-2.54V11.14h2.54v5.27h11.18v-5.27h2.54zm-13.6-7.42h11.18v-2.79H14.53z" className="h"></path>
-					</svg>
-				</div>
-				<span>Hedera</span>
-			</div>
-
-
+			
 		</div>
+	</div>
 	);
 }
 export default Buyer;
