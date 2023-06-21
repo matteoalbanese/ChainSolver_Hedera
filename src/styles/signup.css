@@ -16,13 +16,13 @@ body{
     left: 50%;
     top: 50%;
 }
-.background .shape{
+.background .shape2{
     height: 200px;
     width: 200px;
     position: absolute;
     border-radius: 50%;
 }
-.shape:first-child{
+.shape2:first-child{
     background: linear-gradient(
         #205887,
         #55B3BD
@@ -30,7 +30,7 @@ body{
     left: -80px;
     top: -80px;
 }
-.shape:last-child{
+.shape2:last-child{
     background: linear-gradient(
         to right,
         #4C5A8E,
@@ -41,7 +41,7 @@ body{
 }
 
 
-.section{
+.section1{
     height: 700px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
@@ -147,4 +147,12 @@ a#log{
 a#log:hover{
     color: #ffffff;
     text-decoration: none;
+}
+
+
+
+#client input, #freelancer input{
+    width: 20px;
+    margin-right: 10px;
+    align-self: center;
 }
