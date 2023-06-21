@@ -6,7 +6,8 @@ import "../styles/App.css";
 import abortContractFcn from "../components/hedera/SmartContract/abort.js";
 import getStatus from "../components/hedera/SmartContract/status.js";
 import payWorkerFcn from "../components/hedera/SmartContract/payWorker.js";
-
+import logo from "../assets/logo.png";
+import chat from "../assets/chat.png";
 
 
 function Worker() {
@@ -210,6 +211,12 @@ function Worker() {
 
 	return (
 		<div className="App">
+			<div className="logo">
+				<div className="symbol">
+					<img className="log" src={logo} alt="logo"></img>
+				</div>
+				<span>ChainSolver</span>
+			</div>
 			<h1 className="header">Worker Interface</h1>
 			<MyGroup fcn={connectWallet} buttonLabel={"Connect Wallet"} text={connectText} link={connectLink} />
 			<h2 className="header">Deploy a new contract</h2>
@@ -232,16 +239,10 @@ function Worker() {
 			<MyGroup fcn={retrieveStatus} buttonLabel={"status"} text={statusText} />
 
 			<MyGroup fcn={abortExecute} buttonLabel={"Abort the smart contract"} text={abortText} link={abortLink} />
-			
-			<div className="logo">
-				<div className="symbol">
-					<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40">
-						<path d="M20 0a20 20 0 1 0 20 20A20 20 0 0 0 20 0" className="circle"></path>
-						<path d="M28.13 28.65h-2.54v-5.4H14.41v5.4h-2.54V11.14h2.54v5.27h11.18v-5.27h2.54zm-13.6-7.42h11.18v-2.79H14.53z" className="h"></path>
-					</svg>
-				</div>
-				<span>Hedera</span>
-			</div>
+
+			<div>
+			    <img className="chat" src={chat}></img>
+                        </div>
 		</div>
 	);
 }
