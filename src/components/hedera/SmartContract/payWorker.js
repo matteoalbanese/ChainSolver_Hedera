@@ -33,6 +33,8 @@ async function payWorkerFcn(walletData, contractAddress){
     }catch(payWorkerError){
         console.log(`${payWorkerError.message.toString()}`);
     }
+
+    return txHash;
 }
 
 export default payWorkerFcn;
