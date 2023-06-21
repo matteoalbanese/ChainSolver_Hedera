@@ -30,6 +30,8 @@ async function confirmPurchaseFcn(walletData, contractAddress, prezzoX2){
     }catch(confirmPurchaseError){
         console.log(`${confirmPurchaseError.message.toString()}`);
     }
+
+    return txHash;
 }
 
 export default confirmPurchaseFcn;
