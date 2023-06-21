@@ -211,6 +211,7 @@ code {
 	min-height: 800px;
 	text-align: center;
     flex: 1 0 auto;
+    padding-bottom: 30px;
 }
 
 .container {
@@ -229,12 +230,17 @@ code {
 .header {
 	margin: 70px auto 51px;
 	font-size: 40px;
-	font-weight: bold;
+	text-decoration: none;
 	color: rgb(255, 255, 255);
 	width: calc(100% - 48px);
 	padding: 0 24px;
 	display: block;
 	position: relative;
+
+}
+
+h1{
+  font-weight: normal;
 }
 
 .sub-text {
@@ -334,7 +340,7 @@ code {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-top: 25px;
+	margin-top: 40px;
 	margin-bottom: 70px;
 }
 
@@ -345,6 +351,63 @@ code {
 	line-height: 1;
 	font-weight: 300;
 	letter-spacing: -0.03em;
+	margin-left: 20px;
+}
+
+.background{
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+.background .shape{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+.shape:first-child{
+    background: linear-gradient(
+        #205887,
+        #55B3BD
+    );
+    left: -200px;
+    top: -80px;
+}
+.shape:last-child{
+    background: linear-gradient(
+        to right,
+        #4C5A8E,
+        #706CB9
+    );
+    right: -250px;
+    bottom: -120px;
+}
+
+.log{
+	width: 100px;
+    height: 100px;
+}
+
+.form{
+  width: 40%;
+  position: relative;
+  left: 30%;
+  color: black;
+}
+
+.button{
+  color: black;
+}
+
+.chat{
+  width: 70px;
+  position: relative;
+  margin-top: 30px;
+  right: -700px;
 }
 
 @media (max-width: 340px) {
