@@ -17,8 +17,9 @@ function Buyer() {
 	const [account, setAccount] = useState();
 	const [network, setNetwork] = useState();
 	const [contractAddress, setContractAddress] = useState();
+	const [price, setPrice]= useState();
 	
-
+	const [errorText, setErrorText] = useState();
 	const [connectText, setConnectText] = useState("🔌 Connect here...");
 	const [priceText, setPriceText] = useState();
 	const [confirmPurchaseText, setConfirmPurchaseText]= useState();
@@ -30,13 +31,12 @@ function Buyer() {
 	const [confirmReceivedLink, setConfirmReceivedLink]= useState();
 	
 
-	const[price, setPrice]= useState();
-
 
 	async function connectWallet() {
 		if (account !== undefined) {
 			setConnectText(`🔌 Account ${account} already connected ⚡ ✅`);
 		} else {
+			setErrorText();
 			const wData = await walletConnectFcn();
 
 			let newAccount = wData[0];
@@ -58,31 +58,39 @@ function Buyer() {
 	async function retrievePrice(){
 		
 		if(account === undefined){
-			setConnectText("🛑 there is no wallet connected 🛑");
-		}else if (contractAddress === undefined)
-		{
-			setPriceText("🛑 there is no contract deployed 🛑");
+			setErrorText("🛑 there is no wallet connected 🛑");
+		}else if (contractAddress === undefined){
+			setErrorText("🛑 there is no contract deployed 🛑");
+		}else if(!(contractAddress.toString().startsWith("0x")) || contractAddress.toString().length !== 42 ){
+			setPriceText();
+			setErrorText("🛑 contract not valid 🛑");
 		}else{
+			setErrorText();
 			setPriceText();
 			const prezzo = await getPrice(walletData, contractAddress);
 			
 			setPrice(prezzo*1325/1000);
-			setPriceText(`price of the work: ${prezzo} total cost (price + fees + 30% deposit): ${prezzo*1325/1000}`)
+			setPriceText(`price of the work: ${prezzo} Hbar; total cost (price + fees + 30% deposit): ${prezzo*1325/1000} Hbar`)
 			
 		}
 		
 	}
 	async function confirmPurchaseEx(){
 		if(account === undefined){
-			setConnectText("🛑 there is no wallet connected 🛑");
+			setErrorText("🛑 there is no wallet connected 🛑");
 		}else if (contractAddress === undefined){
-			setConfirmPurchaseText("🛑 there is no contract deployed 🛑");
-		}else {
-			
-			const [txHash] = await confirmPurchaseFcn(walletData, contractAddress, price);
+			setErrorText("🛑 there is no contract deployed 🛑");
+		}else if(!(contractAddress.toString().startsWith("0x")) || contractAddress.toString().length !== 42 ){
+			setErrorText("🛑 contract not valid 🛑");
+			setPriceText();
+		}else if (price === undefined){
+			setConfirmPurchaseText("🛑 you didn't see the price! 🛑")
+		}else{
+			setErrorText();
+			const txHash = await confirmPurchaseFcn(walletData, contractAddress, price);
 
 			if (txHash === undefined) {
-				console.log("🛑 Error: confirmPurchaseEx, transaction hash undefined 🛑");
+				setConfirmPurchaseText("🛑 Error: confirmPurchaseEx, transaction hash undefined 🛑");
 			} else {
 				setConfirmPurchaseText(`Payment confirmed | Transaction hash: ${txHash} ✅`);
 				setConfirmPurchaseLink(`https://hashscan.io/${network}/tx/${txHash}`);
@@ -93,17 +101,18 @@ function Buyer() {
 	
 	async function confirmReceivedEx(){
 		if(account === undefined){
-			setConnectText("🛑 there is no wallet connected 🛑");
-		}else if (price === undefined){
-			setConfirmReceivedText("🛑 you didn't see the price! 🛑")
-		}
-		if (contractAddress === undefined){
-			setConfirmReceivedText("🛑 there is no contract deployed 🛑");
-		}else{
-			const [txHash] = await confirmReceivedFcn(walletData, contractAddress);
+			setErrorText("🛑 there is no wallet connected 🛑");
+		}else if (contractAddress === undefined){
+			setErrorText("🛑 there is no contract deployed 🛑");
+		}else if(!(contractAddress.toString().startsWith("0x")) || contractAddress.toString().length !== 42 ){
+			setErrorText("🛑 contract not valid 🛑");
+			setPriceText();
+		  }else{
+			setErrorText();
+			const txHash = await confirmReceivedFcn(walletData, contractAddress);
 
 			if (txHash === undefined) {
-				console.log("🛑 Error: confirmReceivedEx, transaction hash undefined 🛑");
+				setConfirmReceivedText("🛑 Error: confirmReceivedEx, transaction hash undefined 🛑");
 			} else {
 				setConfirmReceivedText(`Lavoro consegnato | Transaction hash: ${txHash} ✅`);
 				setConfirmReceivedLink(`https://hashscan.io/${network}/tx/${txHash}`);
@@ -115,10 +124,15 @@ function Buyer() {
 	
 	async function retrieveStatus(){
 		if(account === undefined){
-			setConnectText("🛑 there is no wallet connected 🛑");
+			setErrorText("🛑 there is no wallet connected 🛑");
 		}else if (contractAddress === undefined){
-			setStatusText("🛑 there is no contract deployed 🛑");
-		}else{
+			setErrorText("🛑 there is no contract deployed 🛑");
+		}else if(!(contractAddress.toString().startsWith("0x")) || contractAddress.toString().length !== 42){
+			setErrorText("🛑 contract not valid 🛑");
+			setPriceText();
+		  }else{
+			setErrorText();
+			setStatusText();
 			const stato = await getStatus(walletData, contractAddress);
 			console.log(`${stato}`);
 			
@@ -140,13 +154,12 @@ function Buyer() {
 
 function MyForm() {
 	function handleSubmit(e) {
-	  // Prevent the browser from reloading the page
+	
 	  e.preventDefault();
 	
-	  // Read the form data
 	  const form = e.target;
 	  const formData = new FormData(form);
-	  // Or you can work with it as a plain object:
+	 
 	  const formJson = Object.fromEntries(formData.entries());
 	  setContractAddress(formJson.address);
 	  console.log(`Address : ${formJson.address}`);
@@ -164,11 +177,13 @@ function MyForm() {
 		<label>
 		  Insert smart contract Address : <input name="address" defaultValue="" />
 		</label>
-		<button type="reset">Double click to Reset </button>
+		<button type="reset"> Reset </button>
 		<button type="submit">Submit</button>
 	  </form>
 		);
   }
+  
+
   
 
 	return (
@@ -181,6 +196,7 @@ function MyForm() {
 			
 			<div>
 				<MyForm />
+				<p className="sub-text">{errorText}</p>
 			</div>
 			
 			<MyGroup fcn={retrievePrice} buttonLabel={"click here to see the price"}  text={priceText} />
