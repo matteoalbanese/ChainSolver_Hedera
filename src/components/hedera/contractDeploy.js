@@ -14,6 +14,7 @@ async function contractDeployFcn(walletData, cauzione) {
 
 	let contractAddress;
 	
+
 	try {
 		const gasLimit = 4000000;
 		
