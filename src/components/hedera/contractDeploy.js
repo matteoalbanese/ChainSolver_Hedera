@@ -5,7 +5,7 @@ import { ContractFactory, ethers } from "ethers";
 
 
 
-async function contractDeployFcn(walletData, cauzione) {
+async function contractDeployFcn(walletData, price) {
 	console.log(`\n=======================================`);
 	console.log(`- Deploying smart contract on Hedera...🟠`);
 
@@ -20,7 +20,7 @@ async function contractDeployFcn(walletData, cauzione) {
 		
 		const myContract = new ContractFactory(abi, bytecode, signer); 
 		
-		const contractDeployTx = await myContract.deploy({gasLimit: gasLimit, value: ethers.utils.parseEther(cauzione.toString())} );
+		const contractDeployTx = await myContract.deploy({gasLimit: gasLimit, value: ethers.utils.parseEther(price.toString())} );
 		
 		const contractDeployRx = await contractDeployTx.deployTransaction.wait();
 
