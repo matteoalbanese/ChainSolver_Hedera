@@ -16,13 +16,13 @@ This command clones the pw-hedera repository into your desired directory.
 > npm start
 
 
-## HOW WORKS?
+## How works?
 You can apply to the app as a worker or a buyer, everyone inserts dates about his type of profile. The contact between the two types of figure happens through a post published by the worker, where he describes his kind of work (price, expiration date, delivery options) and the buyer can select what contract he wants to accept. 
 Through the buttons is possible to call smart contract function e keeping track of the contract state. 
 
 
 
-## SMART CONTRACT DETAILS 
+## Smart Contract details
 The smart contract implements a purchase agreement between two figures: worker and buyer. 
 
 When the contract is deployed the price variable is setted by worker input, and the worker address is setted to the wallet address which is deploying the contract. 
