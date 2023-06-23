@@ -11,9 +11,11 @@ ChainSolver App’s goal is to create a platform that connects workers and custo
  
  
 <p> to install all dependences </p>
+
 > npm install 
 
 <p> to start the server </p>
+
 > npm start
 
 
