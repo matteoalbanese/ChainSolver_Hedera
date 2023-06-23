@@ -17,6 +17,17 @@ ChainSolver App’s goal is to create a platform that connects workers and custo
 > npm start
 
 
+##Tools
++ Vs Code
++ Remix ide 
++ Ether.js
++ Node.js
++ React 
++ Hedera JSON-RPC Relay
++ Mirror node REST API
++ Mirror node explorer
+
+
 ## How works?
 You can apply to the app as a worker or a buyer, everyone inserts dates about his type of profile. The contact between the two types of figure happens through a post published by the worker, where he describes his kind of work (price, expiration date, delivery options) and the buyer can select what contract he wants to accept. 
 Through the buttons is possible to call smart contract function e keeping track of the contract state. 
