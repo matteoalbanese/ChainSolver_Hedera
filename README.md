@@ -10,10 +10,10 @@ ChainSolver App’s goal is to create a platform that connects workers and custo
 > git clone https://github.com/matteoalbanese/pw-hedera.git
  
  
-### to install all dependences
+<p> to install all dependences </p>
 > npm install 
 
-### to start the server
+<p> to start the server </p>
 > npm start
 
 
