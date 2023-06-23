@@ -7,7 +7,7 @@ This command clones the pw-hedera repository into your desired directory.
 
  
 ### to install all dependences
-<p> npm install  </p>
+> npm install 
 
 ### to start the server
- <p>npm start  </p> 
+> npm start
