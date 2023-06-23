@@ -122,7 +122,7 @@ function Buyer() {
 			if (txHash === undefined) {
 				setConfirmReceivedText("🛑 Error: confirmReceivedEx, transaction hash undefined 🛑");
 			} else {
-				setConfirmReceivedText(`Lavoro consegnato | Transaction hash: ${txHash} ✅`);
+				setConfirmReceivedText(`Work received | Transaction hash: ${txHash} ✅`);
 				setConfirmReceivedLink(`https://hashscan.io/${network}/tx/${txHash}`);
 			}
 		}
