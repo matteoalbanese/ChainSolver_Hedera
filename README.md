@@ -4,7 +4,7 @@ ChainSolver App’s goal is to create a platform that connects workers and custo
 
 
 ## Run this dapp locally
-### clone this repository in your terminal running
+Clone this repository in your terminal running
 This command clones the pw-hedera repository into your desired directory.
 > git clone https://github.com/matteoalbanese/pw-hedera.git
  
