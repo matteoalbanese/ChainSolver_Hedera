@@ -165,19 +165,19 @@ function MyForm() {
 	
 	  e.preventDefault();
 	
-	  const form = e.target;
-	  const formData = new FormData(form);
+	const form = e.target;
+	const formData = new FormData(form);
 	 
-	  const formJson = Object.fromEntries(formData.entries());
-	  setContractAddress(formJson.address);
-	  const contractAddress = formJson.address;
-	  if(!(contractAddress.toString().startsWith("0x")) || contractAddress.toString().length !== 42 ){
-		setFormText("🛑 contract not valid 🛑");
-		setPriceText();
-		}
-		else setFormText(`Address : ${formJson.address}`);
-	
-	  
+	const formJson = Object.fromEntries(formData.entries());
+	setContractAddress(formJson.address);
+	const cAddress = formJson.address;
+	if(!(cAddress.toString().startsWith("0x")) || cAddress.toString().length !== 42 ){
+		setForm1Text("🛑 contract not valid 🛑");
+	} else{
+		setContractAddress(formJson.address);
+		setFormText(`Address : ${formJson.address}`);
+		setFormLink(`https://hashscan.io/${network}/address/${cAddress}`)
+
 	}
 	
 	function handleReset(){
