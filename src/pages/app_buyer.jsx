@@ -36,12 +36,12 @@ function Buyer() {
 	const [connectLink, setConnectLink] = useState("");
 	const [confirmPurchaseLink, setConfirmPurchaseLink]= useState();
 	const [confirmReceivedLink, setConfirmReceivedLink]= useState();
-	
+	const [formLink, setFormLink] = useState(); 
 
 
 	async function connectWallet() {
-		if (account !== undefined) {
-			setConnectText(`🔌 Account ${account} already connected ⚡ ✅`);
+		if (account !== undefined) {	
+			setConnectText(` Account ${account} already connected  ✅`);
 		} else {
 			const wData = await walletConnectFcn();
 			setErrorText();
@@ -49,7 +49,7 @@ function Buyer() {
 			let newNetwork = wData[2];
 			
 			if (newAccount !== undefined) {
-				setConnectText(`🔌 Account ${newAccount} connected ⚡ ✅`);
+				setConnectText(` Account ${newAccount} connected  ✅`);
 				setConnectLink(`https://hashscan.io/${newNetwork}/account/${newAccount}`);
 
 				//update the react state with the info 
@@ -122,7 +122,7 @@ function Buyer() {
 			if (txHash === undefined) {
 				setConfirmReceivedText("🛑 Error: confirmReceivedEx, transaction hash undefined 🛑");
 			} else {
-				setConfirmReceivedText(`Work received | Transaction hash: ${txHash} ✅`);
+				setConfirmReceivedText(`Work delivered | Transaction hash: ${txHash} ✅`);
 				setConfirmReceivedLink(`https://hashscan.io/${network}/tx/${txHash}`);
 			}
 		}
@@ -165,21 +165,22 @@ function MyForm() {
 	
 	  e.preventDefault();
 	
-	const form = e.target;
-	const formData = new FormData(form);
+	  const form = e.target;
+	  const formData = new FormData(form);
 	 
-	const formJson = Object.fromEntries(formData.entries());
-	setContractAddress(formJson.address);
-	const cAddress = formJson.address;
-	if(!(cAddress.toString().startsWith("0x")) || cAddress.toString().length !== 42 ){
-		setForm1Text("🛑 contract not valid 🛑");
-	} else{
-		setContractAddress(formJson.address);
-		setFormText(`Address : ${formJson.address}`);
-		setFormLink(`https://hashscan.io/${network}/address/${cAddress}`)
-
+	  const formJson = Object.fromEntries(formData.entries());
+	  setContractAddress(formJson.address);
+	  const cAddress = formJson.address;
+	  if(!(cAddress.toString().startsWith("0x")) || cAddress.toString().length !== 42 ){
+		  setFormText("🛑 contract not valid 🛑");
+	  } else{
+		  setContractAddress(formJson.address);
+		  setFormText(`Address : ${formJson.address}`);
+		  setFormLink(`https://hashscan.io/${network}/address/${cAddress}`)
+  
+	  }
 	}
-	
+
 	function handleReset(){
 		setContractAddress();
 		setFormText("contract address resetted ")
@@ -215,19 +216,22 @@ function MyForm() {
 			<MyGroup fcn={connectWallet} buttonLabel={"Connect wallet"} text={connectText} link={connectLink}/>
 
 			<div>
-				<p className="sub-text">{formText}</p>
+				<a href={formLink}>
+					<p className="sub-text">{formText}</p>
+				</a>
+			
 				<MyForm />
 				<p className="sub-text">{errorText}</p>
 			</div>
 
-			<MyGroup fcn={retrievePrice} buttonLabel={"click here to see the price"}  text={priceText} />
+			<MyGroup fcn={retrievePrice} buttonLabel={"price"}  text={priceText} />
 			
 			<MyGroup fcn={confirmPurchaseEx} buttonLabel={"Accept contract "} text={confirmPurchaseText} link={confirmPurchaseLink} />
 
 			<MyGroup fcn={confirmReceivedEx} buttonLabel={"work received"} text={confirmReceivedText} link={confirmReceivedLink} />
 			
-			<MyGroup fcn={retrieveStatus} buttonLabel={"click here to see the status"} text={statusText} />
-
+			<MyGroup fcn={retrieveStatus} buttonLabel={"status"} text={statusText} />
+		
             <div>
 				<img className="chat" src={chat} alt="chat"></img>
             </div>
