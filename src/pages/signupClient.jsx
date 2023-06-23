@@ -47,7 +47,7 @@ function SignupClient() {
 
         <div id="allow">
         <input type='checkbox' name='allow' value="1" id="allow" />
-        <label for='allow'>Agree to Terms and Conditions</label>
+        <label for='allow'>Agree to ChainSolver Terms and Conditions</label>
         </div>
 
         <div className="submit">
